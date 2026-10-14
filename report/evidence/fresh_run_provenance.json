@@ -1,0 +1,26 @@
+{
+  "dataset_version": "d10-21e4070301",
+  "source_repository": "https://github.com/JJayzdev/K4-Track-4-Day10-VisionLanguageModel",
+  "git_revision": "c2f39979458d5b10b1055c6ab47d6bd855b73151",
+  "export_created_utc": "2026-10-14T18:46:37.204781+00:00",
+  "source_sha256": {
+    "__init__.py": "ab68cff3699bf71fe66ce8f0ba91a6cd7415a5382d67aca5e259c23745642bdf",
+    "cli.py": "d6a2f8f1c2a7c7d9e0d7e825bc8aa89a9ab0768592e85b907b48a2c930ddc833",
+    "grounding.py": "e313755f3c27a830656606d45a8d0d12a1fd19f9644efa05758a838edbc9711c",
+    "modeling.py": "5fb42c479c99ac9be91ed292ee1f744d104f08cabac24510e922d78742df5eb0",
+    "reporting.py": "28012cecc0a8d8dcd7a244a32f2fd2e02edac466b7f2585f44f071246bc2c4af"
+  },
+  "fresh_evidence_sha256": {
+    "e0.json": "2004b89a616ab3b7d1d086004f27a46aa34a0d45abf8f60dd4441d29d9864a56",
+    "e1.json": "cf1de6ddd20a7b2fb48e77fec941006d875c5820c8debd048cf953a9a4300019",
+    "e2.json": "c910b8b0b946b35487260334f5ba9ed03fb39606be130330816db327c6119f33",
+    "e3.json": "75c9f666334a4ab2385df9a84dfecc43be009ee11011267327b95c6f46aff819",
+    "e4_rank_4.json": "65423319a51692b8b18e38a3aee43a9a8ffeca732a3f09fa53db8dac6cec6a81",
+    "e4_rank_64.json": "4de36db52e8f5ecd3916f098c16a5d1761f7523b6f74a322d756fe388c2c4dbe"
+  },
+  "note": "Fresh official scorer outputs copied from work/downloaded_evidence. Prior local e1/e2 evidence archived under work/stale_report_evidence_20261015; raw model weights are not included in this evidence bundle. Coordinate-scale comparison JSONs are reproducible rescoring outputs on the same downloaded E3 predictions and split; they are separate from the six official run evidence files.",
+  "coordinate_scale_check_sha256": {
+    "e3_norm1000_rescore.json": "0bee3137b0422e21d789a756459c4752b56d84302e572cd8923f9957d0be2442",
+    "e3_pixel_mismatch_rescore.json": "bf708eaa1862d38db8ba4b126865bd0f0f62d5b853a45b9bbcdd776982ccdefb"
+  }
+}
