@@ -17,11 +17,13 @@ Các số trong bảng được chép từ sáu JSON official scorer mới nhấ
 
 Các lượt SFT dùng 300 successful optimizer steps, batch 2, tích luỹ gradient 4, seed 42, LR 2e-4, toàn bộ 1.422 ảnh train và tọa độ norm1000. E3 và hai lượt E4 có 2 lần GradScaler bỏ qua overflow; các lần đó không tính vào 300 bước thành công. E4 chỉ đổi rank so với baseline E3: rank 4/alpha 8 và rank 64/alpha 128. E3 được chọn làm baseline vì có F1 cao nhất trong E1–E3 trên test.
 
+Transfer audit: artifacts của năm runs, mỗi run có checkpoint 100/200/300, đã được tải về từ runtime Kaggle và bản saved output Version `358449192` (dùng để hoàn tất E4). Tổng cộng 77 files / 8.508.613.345 bytes; từng file có SHA256 và từng checkpoint được kiểm tra metadata, adapter safetensors, tensor count và projector fp32 khi áp dụng. Inventory tại [model_artifact_transfer.json](report/evidence/model_artifact_transfer.json). Base pretrained weights không nằm trong gói này; tổng số tham số kiến trúc ở Câu 1 vẫn là ước tính GUIDE. README PEFT dùng chung ở một số checkpoint đã được deduplicate như ghi trong inventory; weights/config/run metadata riêng của từng checkpoint vẫn được giữ. Raw E0 JSONL không có trong runtime hoặc bundle tải về nên Câu 2 chỉ dùng số liệu scorer tổng hợp.
+
 ## 10 câu hỏi
 
 ### Câu 1 — Kiến trúc
 
-Theo quy mô ước tính trong GUIDE, LLM cộng embedding khoảng 4,0B tham số, ViT khoảng 415M; projector gồm visual.merger khoảng 27M và visual.deepstack_merger_list khoảng 82M, tổng khoảng 109M. Tổng model khoảng 4,44B. Đây là ước tính kiến trúc trong GUIDE, không phải phép đếm mọi tham số từ checkpoint tải về. E1 chỉ huấn luyện LoRA LLM; E2 mở thêm toàn projector fp32; E3 thêm LoRA trên 96 module attention/MLP của ViT. Số module LoRA quan sát được là 252 ở E1/E2 và 348 ở E3. Tham số trainable thực tế lần lượt là 33.030.144, 142.135.296 và 148.426.752.
+Theo quy mô ước tính trong GUIDE, LLM cộng embedding khoảng 4,0B tham số, ViT khoảng 415M; projector gồm visual.merger khoảng 27M và visual.deepstack_merger_list khoảng 82M, tổng khoảng 109M. Tổng model khoảng 4,44B. Đây là ước tính kiến trúc trong GUIDE, không phải phép đếm mọi tham số từ checkpoint tải về; base pretrained weights không có trong artifact transfer. Đối chiếu các adapter safetensors và projector đã tải, trainable params gồm: E1 LoRA 33.030.144; E2 LoRA 33.030.144 + projector 109.105.152 = 142.135.296; E3 LoRA 39.321.600 + projector 109.105.152 = 148.426.752; E4 rank4 LoRA 9.830.400 + projector 109.105.152 = 118.935.552; E4 rank64 LoRA 157.286.400 + projector 109.105.152 = 266.391.552. Số module LoRA quan sát được là 252 ở E1/E2 và 348 ở E3/E4.
 
 ### Câu 2 — E0
 
