@@ -8,7 +8,7 @@ Các số trong bảng được chép từ sáu JSON official scorer mới nhấ
 
 | Mã | Setup | Tham số huấn luyện | VRAM đỉnh (GB) | Phút | F1 | CI95 | FP/ảnh | F1 pothole | F1 crack | F1 manhole |
 |---|---|---:|---:|---:|---:|---|---:|---:|---:|---:|
-| E0 | Zero-shot | 0 | — | — | 0.072948 | 0.049751–0.098232 | 1.183279 | 0.113744 | 0.000000 | 0.139535 |
+| E0 | Zero-shot | 0 | — | — | 0.072948 | 0.049751–0.098232 | 1.183280 | 0.113744 | 0.000000 | 0.139535 |
 | E1 | LoRA LLM, rank 16 | 33,030,144 | 6.357 | 43.222 | 0.250657 | 0.214699–0.291631 | 1.334405 | 0.128342 | 0.191977 | 0.500000 |
 | E2 | E1 + projector fp32 | 142,135,296 | 8.051 | 44.135 | 0.360568 | 0.321461–0.401119 | 1.093248 | 0.177966 | 0.311475 | 0.621429 |
 | E3 | E2 + LoRA ViT, rank 16 | 148,426,752 | 8.228 | 52.686 | 0.451319 | 0.411871–0.495205 | 0.861736 | 0.370044 | 0.379661 | 0.666667 |
@@ -23,6 +23,8 @@ Transfer audit: artifacts của năm runs, mỗi run có checkpoint 100/200/300,
 
 ### Câu 1 — Kiến trúc
 
+ViT mã hóa ảnh thành đặc trưng thị giác; projector gồm merger và các deepstack merger đưa đặc trưng về không gian biểu diễn mà LLM sử dụng. LLM kết hợp thông tin ảnh với prompt để sinh JSON lớp và tọa độ. E1 chỉ cập nhật LoRA LLM; E2 thêm projector; E3 thêm LoRA ViT.
+
 Từ [config snapshot](report/evidence/qwen3_vl_4b_config.json), tôi dựng Qwen3VLForConditionalGeneration trên `meta` bằng Torch 2.3.1/Transformers 4.57.6, không nạp weights. Model có 4.437.815.808 unique parameters: language model và embedding 4.022.468.096, visual backbone 306.242.560, projector mergers 109.105.152. `lm_head` tied với embedding nên chỉ tính một lần. Kết quả cùng hash config và cách đếm lưu tại [architecture_parameter_count.json](report/evidence/architecture_parameter_count.json); đây là phép đếm kiến trúc config, không phải inventory weights checkpoint. Base pretrained weights không có trong artifact transfer. Đối chiếu các adapter safetensors và projector đã tải, trainable params gồm: E1 LoRA 33.030.144; E2 LoRA 33.030.144 + projector 109.105.152 = 142.135.296; E3 LoRA 39.321.600 + projector 109.105.152 = 148.426.752; E4 rank4 LoRA 9.830.400 + projector 109.105.152 = 118.935.552; E4 rank64 LoRA 157.286.400 + projector 109.105.152 = 266.391.552. Số module LoRA quan sát được là 252 ở E1/E2 và 348 ở E3/E4.
 
 ### Câu 2 — E0
@@ -32,6 +34,8 @@ E0 official trên 311 ảnh có parse_valid_rate 0,533762 và F1 0,072948; score
 Ví dụ raw từ `vlcsnap-00200` (đã rút gọn khoảng trắng; bản byte-exact ở JSONL) là `[{"bbox_2d":[770,640,846,684],"label":"pothole"},{"bbox_2d":[770,640,846,684],"label":"crack"},{"bbox_2d":[909,786,997,824],"label":"manhole"}]`. Cùng một vùng dự đoán bị gán hai nhãn, pothole và crack, nhưng box không khớp GT crack (IoU 0), nên cả hai đều không được match. Box manhole mang đúng nhãn nhưng IoU chỉ 0,3433, dưới ngưỡng 0,5; scorer tính FP và bỏ sót GT manhole. Ở `vlcsnap-00201`, raw là `[]` dù GT có manhole và crack, minh họa bỏ sót cả hai. Một ảnh thứ hai trong diagnostic sinh lặp lại cùng crack box nhiều lần, nhưng output bị cắt giữa JSON ở giới hạn 256 token; scorer coi parse này invalid. Những ví dụ nhỏ này minh họa kiểu lỗi, không được dùng để suy rộng metric toàn test.
 
 ### Câu 3 — Sai thang tọa độ
+
+Thang 0–1000 biểu diễn vị trí tương đối theo chiều rộng/cao nên cùng một vị trí tương đối có cùng tọa độ khi đổi độ phân giải ảnh. Tọa độ pixel tuyệt đối phụ thuộc kích thước ảnh; khi vẽ lại, cần nhân tọa độ chuẩn hóa với chiều tương ứng rồi chia 1000.
 
 Tôi dùng nguyên E3 test predictions, cùng 311 test IDs và dataset_version, rồi chấm hai lần bằng scripts/score.py. Với norm1000 đúng, F1 = 0,451319 (CI95 0,411871–0,495205). Cố ý đọc cùng số tọa độ như pixel cho F1 = 0,000000 (CI95 0–0), dù parse_valid_rate vẫn 1,0. Scorer chia x cho 640 và y cho 360 trước khi đổi sang 0–1000; vì raw coordinates vốn đã chuẩn hóa, box trở nên sai kích thước và lệch theo trục, nên không còn IoU dương đủ để match. Kết quả đối chiếu được lưu trong report/evidence/e3_norm1000_rescore.json và e3_pixel_mismatch_rescore.json.
 
@@ -87,7 +91,7 @@ vlcsnap-00205 — crack bên phải khớp GT (IoU 0,767); crack GT thứ hai s�
 
 ### Câu 10 — E4
 
-E4 chỉ đổi rank LoRA trên LLM và ViT so với baseline E3 rank16, giữ nguyên config/data/seed/projector. Rank4/alpha8 đạt F1 0,423592 (CI95 0,382684–0,464776); rank64/alpha128 đạt 0,416071 (0,371025–0,460419), còn baseline E3 là 0,451319 (0,411871–0,495205). CI chồng nhau, nên không thể kết luận khác biệt có ý nghĩa từ test nhỏ này. Rank64 dùng 266.391.552 tham số trainable và 10,079 GB peak; rank4 dùng 118.935.552 và 7,789 GB. Trong kết quả này, rank lớn hơn không cải thiện F1 và tiêu tốn nhiều VRAM hơn; bằng chứng chưa đủ để tuyên bố rank4 và rank64 khác nhau đáng kể.
+E4 chỉ đổi rank LoRA trên LLM và ViT so với baseline E3 rank16, giữ nguyên config/data/seed/projector. Alpha được đặt bằng 2 × rank ở cả ba cấu hình để giữ hệ số scaling LoRA alpha/rank = 2; alpha thay đổi theo rank, không được khảo sát như một biến độc lập. Rank4/alpha8 đạt F1 0,423592 (CI95 0,382684–0,464776); rank64/alpha128 đạt 0,416071 (0,371025–0,460419), còn baseline E3 là 0,451319 (0,411871–0,495205). CI chồng nhau, nên không thể kết luận khác biệt có ý nghĩa từ test nhỏ này. Rank64 dùng 266.391.552 tham số trainable và 10,079 GB peak; rank4 dùng 118.935.552 và 7,789 GB. Trong kết quả này, rank lớn hơn không cải thiện F1 và tiêu tốn nhiều VRAM hơn; bằng chứng chưa đủ để tuyên bố rank4 và rank64 khác nhau đáng kể.
 
 ## Nhìn lại
 
