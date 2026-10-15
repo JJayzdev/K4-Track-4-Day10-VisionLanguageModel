@@ -1,0 +1,50 @@
+{
+  "model_id": "Qwen/Qwen3-VL-4B-Instruct",
+  "config_source": "https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct/raw/main/config.json",
+  "config_path": "work/qwen3_vl_4b_config_snapshot/config.json",
+  "config_sha256": "2e5533f64b7a1a18e5846b76a95c53cfe90a2b400b0e24e75089a7dc992d5420",
+  "config_class": "Qwen3VLConfig",
+  "transformers_version": "4.57.6",
+  "torch_version": "2.3.1+cu118",
+  "model_class": "Qwen3VLForConditionalGeneration",
+  "device": "meta",
+  "weights_loaded": false,
+  "unique_parameter_tensors": 713,
+  "unique_parameter_numel": 4437815808,
+  "registered_numel_including_aliases": 4826771968,
+  "duplicate_parameter_registrations": 1,
+  "groups": {
+    "language_model_and_other": {
+      "unique_parameter_tensors": 398,
+      "unique_numel": 4022468096,
+      "registered_numel": 4022468096,
+      "aliased_parameter_tensors": 0,
+      "aliased_numel": 0
+    },
+    "lm_head": {
+      "unique_parameter_tensors": 0,
+      "unique_numel": 0,
+      "registered_numel": 388956160,
+      "aliased_parameter_tensors": 1,
+      "aliased_numel": 388956160
+    },
+    "visual_backbone": {
+      "unique_parameter_tensors": 291,
+      "unique_numel": 306242560,
+      "registered_numel": 306242560,
+      "aliased_parameter_tensors": 0,
+      "aliased_numel": 0
+    },
+    "visual_projector_mergers": {
+      "unique_parameter_tensors": 24,
+      "unique_numel": 109105152,
+      "registered_numel": 109105152,
+      "aliased_parameter_tensors": 0,
+      "aliased_numel": 0
+    }
+  },
+  "caveat": "Unique torch Parameter objects for this Transformers implementation/config; tied weights counted once. Not a safetensors on-disk tensor-element sum.",
+  "count_date": "2026-10-15",
+  "config_snapshot_sha256_scope": "SHA256 of local config.json snapshot, not model weights.",
+  "config_snapshot_path": "report/evidence/qwen3_vl_4b_config.json"
+}

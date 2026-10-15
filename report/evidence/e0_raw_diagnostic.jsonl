@@ -1,0 +1,5 @@
+{"image_id": "vlcsnap-00200", "raw": "[\n\t{\"bbox_2d\": [770, 640, 846, 684], \"label\": \"pothole\"},\n\t{\"bbox_2d\": [770, 640, 846, 684], \"label\": \"crack\"},\n\t{\"bbox_2d\": [909, 786, 997, 824], \"label\": \"manhole\"}\n]"}
+{"image_id": "vlcsnap-2025-02-18-23h07m43s774", "raw": "[\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652,"}
+{"image_id": "vlcsnap-2025-02-19-17h00m19s245", "raw": "[\n\t{\"bbox_2d\": [433, 647, 517, 679], \"label\": \"manhole\"},\n\t{\"bbox_2d\": [433, 647, 517, 679], \"label\": \"manhole\"}\n]"}
+{"image_id": "vlcsnap-00201", "raw": "[]"}
+{"image_id": "vlcsnap-00202", "raw": "[\n\t{\"bbox_2d\": [309, 684, 396, 714], \"label\": \"manhole\"},\n\t{\"bbox_2d\": [309, 684, 396, 714], \"label\": \"manhole\"}\n]\n"}

@@ -1,0 +1,312 @@
+{
+  "kind": "diagnostic_subset_not_official_E0_evidence",
+  "started_utc": "2026-10-15T03:49:47.047221+00:00",
+  "dataset_version": "d10-21e4070301",
+  "original_meta_sha256": "3897164b1322bf1ba647572e3d6becb41ea9663727ed24a542bdc495f814430b",
+  "split_jsonl_sha256": {
+    "train": "4d4dd9b7b2bcac52a95283ff6a1888652af193d7bdd82dc4f7feaa26fab9719c",
+    "val": "76f3ba9bc92db50e3588203a46c98e25e7830a8b0519d76994eea169c59ebb4d",
+    "test": "09dee14aab6ed7bcdd02c4d432c51c34ae191543f1b73f01b4424f2922f8c200"
+  },
+  "staging_line_ending_normalization": {
+    "applied": false,
+    "scope": "newly generated staging JSON/JSONL only; existing data/splits files are never normalized or rewritten",
+    "files_changed": [],
+    "semantic_values_preserved": true
+  },
+  "split": "test",
+  "coord": "norm1000",
+  "max_new_tokens": 256,
+  "batch_size": 1,
+  "selected_count": 5,
+  "image_ids": [
+    "vlcsnap-00200",
+    "vlcsnap-2025-02-18-23h07m43s774",
+    "vlcsnap-2025-02-19-17h00m19s245",
+    "vlcsnap-00201",
+    "vlcsnap-00202"
+  ],
+  "sessions": [
+    "num-4",
+    "vlc-2025-02-18-23",
+    "vlc-2025-02-19-17",
+    "num-4",
+    "num-4"
+  ],
+  "model_id": "Qwen/Qwen3-VL-4B-Instruct",
+  "torch_version": "2.3.1+cu118",
+  "transformers_version": "4.57.6",
+  "bitsandbytes_version": "0.48.2",
+  "gpu_preflight": {
+    "gpu": "NVIDIA GeForce RTX 3070 Ti Laptop GPU",
+    "free_bytes_before_load": 7458521088,
+    "total_bytes": 8589410304,
+    "minimum_free_bytes": 6442450944,
+    "torch_version": "2.3.1+cu118"
+  },
+  "raw_jsonl": "report/evidence/e0_raw_diagnostic.jsonl",
+  "score_file_written": false,
+  "warning": "Small diagnostic subset only; does not replace or modify report/evidence/e0.json.",
+  "completed_utc": "2026-10-15T03:52:04.199545+00:00",
+  "elapsed_seconds": 137.153,
+  "n_images": 5,
+  "prediction_sha256": "917ce5998595ff3209ca5d45dde8a12b106c285904f9a4475ed19fb54cab3eb6",
+  "subset_scorer_stats_not_official": {
+    "n_images": 5,
+    "parse_valid_rate": 0.8,
+    "missing_predictions": 0,
+    "micro": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 7,
+      "fn": 8
+    },
+    "per_class": {
+      "pothole": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 1,
+        "fn": 0
+      },
+      "crack": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 1,
+        "fn": 3
+      },
+      "manhole": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 5,
+        "fn": 5
+      },
+      "other": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    },
+    "mean_iou": 0.0,
+    "fp_per_image": 1.4,
+    "f1_ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  "examples": [
+    {
+      "image_id": "vlcsnap-00200",
+      "session": "num-4",
+      "gt_objects": [
+        {
+          "label": "crack",
+          "yolo": [
+            0.442968,
+            0.684723,
+            0.182813,
+            0.086111
+          ]
+        },
+        {
+          "label": "manhole",
+          "yolo": [
+            0.946875,
+            0.801389,
+            0.10625,
+            0.091666
+          ]
+        }
+      ],
+      "raw": "[\n\t{\"bbox_2d\": [770, 640, 846, 684], \"label\": \"pothole\"},\n\t{\"bbox_2d\": [770, 640, 846, 684], \"label\": \"crack\"},\n\t{\"bbox_2d\": [909, 786, 997, 824], \"label\": \"manhole\"}\n]",
+      "parsed": [
+        {
+          "label": "pothole",
+          "bbox": [
+            770.0,
+            640.0,
+            846.0,
+            684.0
+          ]
+        },
+        {
+          "label": "crack",
+          "bbox": [
+            770.0,
+            640.0,
+            846.0,
+            684.0
+          ]
+        },
+        {
+          "label": "manhole",
+          "bbox": [
+            909.0,
+            786.0,
+            997.0,
+            824.0
+          ]
+        }
+      ],
+      "parse_kind": "valid_detection_list"
+    },
+    {
+      "image_id": "vlcsnap-2025-02-18-23h07m43s774",
+      "session": "vlc-2025-02-18-23",
+      "gt_objects": [
+        {
+          "label": "manhole",
+          "yolo": [
+            0.661718,
+            0.619444,
+            0.095313,
+            0.094445
+          ]
+        }
+      ],
+      "raw": "[\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652, 998, 750], \"label\": \"crack\"},\n\t{\"bbox_2d\": [720, 652,",
+      "parsed": null,
+      "parse_kind": "invalid_parse"
+    },
+    {
+      "image_id": "vlcsnap-2025-02-19-17h00m19s245",
+      "session": "vlc-2025-02-19-17",
+      "gt_objects": [
+        {
+          "label": "manhole",
+          "yolo": [
+            0.474218,
+            0.663889,
+            0.082813,
+            0.066666
+          ]
+        },
+        {
+          "label": "crack",
+          "yolo": [
+            0.477344,
+            0.709722,
+            0.117187,
+            0.180556
+          ]
+        }
+      ],
+      "raw": "[\n\t{\"bbox_2d\": [433, 647, 517, 679], \"label\": \"manhole\"},\n\t{\"bbox_2d\": [433, 647, 517, 679], \"label\": \"manhole\"}\n]",
+      "parsed": [
+        {
+          "label": "manhole",
+          "bbox": [
+            433.0,
+            647.0,
+            517.0,
+            679.0
+          ]
+        },
+        {
+          "label": "manhole",
+          "bbox": [
+            433.0,
+            647.0,
+            517.0,
+            679.0
+          ]
+        }
+      ],
+      "parse_kind": "valid_detection_list"
+    },
+    {
+      "image_id": "vlcsnap-00201",
+      "session": "num-4",
+      "gt_objects": [
+        {
+          "label": "manhole",
+          "yolo": [
+            0.8875,
+            0.756944,
+            0.0625,
+            0.063889
+          ]
+        },
+        {
+          "label": "crack",
+          "yolo": [
+            0.644532,
+            0.780555,
+            0.173437,
+            0.088889
+          ]
+        }
+      ],
+      "raw": "[]",
+      "parsed": [],
+      "parse_kind": "valid_empty_list"
+    },
+    {
+      "image_id": "vlcsnap-00202",
+      "session": "num-4",
+      "gt_objects": [
+        {
+          "label": "manhole",
+          "yolo": [
+            0.339844,
+            0.697222,
+            0.129687,
+            0.05
+          ]
+        }
+      ],
+      "raw": "[\n\t{\"bbox_2d\": [309, 684, 396, 714], \"label\": \"manhole\"},\n\t{\"bbox_2d\": [309, 684, 396, 714], \"label\": \"manhole\"}\n]\n",
+      "parsed": [
+        {
+          "label": "manhole",
+          "bbox": [
+            309.0,
+            684.0,
+            396.0,
+            714.0
+          ]
+        },
+        {
+          "label": "manhole",
+          "bbox": [
+            309.0,
+            684.0,
+            396.0,
+            714.0
+          ]
+        }
+      ],
+      "parse_kind": "valid_detection_list"
+    }
+  ],
+  "raw_jsonl_sha256": "917ce5998595ff3209ca5d45dde8a12b106c285904f9a4475ed19fb54cab3eb6",
+  "diagnostic_environment_note": "Separate 5-image diagnostic on local RTX 3070 Ti Laptop GPU using torch 2.3.1+cu118, transformers 4.57.6, bitsandbytes 0.48.2. It is not the official 311-image Kaggle E0 run and must not replace report/evidence/e0.json.",
+  "base_model_source": {
+    "repo_id": "Qwen/Qwen3-VL-4B-Instruct",
+    "revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+    "total_bytes": 8875719344,
+    "shards": [
+      {
+        "filename": "model-00001-of-00002.safetensors",
+        "bytes": 4967229296,
+        "sha256": "30a01a0556622645a3cce87b655bbbbbc1f170c196099f1b666c93202c3339a9"
+      },
+      {
+        "filename": "model-00002-of-00002.safetensors",
+        "bytes": 3908490048,
+        "sha256": "046296a2a387efb43b0c997d5833c789604d168834f6e0d3064bf7bb13d002a6"
+      }
+    ],
+    "note": "Public base-model shards used for this separate local diagnostic; no signed URLs included."
+  }
+}
